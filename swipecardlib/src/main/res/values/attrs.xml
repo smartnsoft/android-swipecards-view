@@ -10,6 +10,8 @@
         <attr name="right_swipe_detect" format="boolean"/>
         <attr name="top_swipe_detect" format="boolean"/>
         <attr name="bottom_swipe_detect" format="boolean"/>
+        <attr name="translation_offset" format="float"/>
+        <attr name="translation_value" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="SwipePageView">
