@@ -7,9 +7,7 @@
     android:layout_gravity="top"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom"
->
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,7 +15,7 @@
         card_view:cardElevation="0.0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_marginTop="50dp"
     >
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"

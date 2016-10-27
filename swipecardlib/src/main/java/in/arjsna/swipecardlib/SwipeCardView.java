@@ -260,8 +260,8 @@ public class SwipeCardView
     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
     if (isBase)
     {
-      child.setScaleX((float) (child.getScaleX() - (CURRENT_SCALE_VAL - SCALE_OFFSET)));
-      child.setScaleY((float) (child.getScaleY() - (CURRENT_SCALE_VAL - SCALE_OFFSET)));
+      child.setScaleX((child.getScaleX() - (CURRENT_SCALE_VAL - SCALE_OFFSET)));
+      child.setScaleY((child.getScaleY() - (CURRENT_SCALE_VAL - SCALE_OFFSET)));
       child.setY(child.getTranslationY() + CURRENT_TRANSY_VAL - TRANS_OFFSET);
     }
     else
@@ -270,11 +270,14 @@ public class SwipeCardView
       child.setScaleY(child.getScaleY() - CURRENT_SCALE_VAL);
       child.setY(child.getTranslationY() + CURRENT_TRANSY_VAL);
     }
+
     CURRENT_SCALE_VAL += SCALE_OFFSET;
     CURRENT_TRANSY_VAL += TRANS_OFFSET;
+
     addViewInLayout(child, 0, lp, true);
 
     final boolean needToMeasure = child.isLayoutRequested();
+
     if (needToMeasure)
     {
       int childWidthSpec = getChildMeasureSpec(getWidthMeasureSpec(), getPaddingLeft() + getPaddingRight() + lp.leftMargin + lp.rightMargin, lp.width);
@@ -286,9 +289,8 @@ public class SwipeCardView
       cleanupLayoutState(child);
     }
 
-
-    int w = child.getMeasuredWidth();
-    int h = child.getMeasuredHeight();
+    int width = child.getMeasuredWidth();
+    int height = child.getMeasuredHeight();
 
     int gravity = lp.gravity;
     if (gravity == -1)
@@ -296,20 +298,20 @@ public class SwipeCardView
       gravity = Gravity.TOP | Gravity.START;
     }
 
-
     int layoutDirection = getLayoutDirection();
     final int absoluteGravity = Gravity.getAbsoluteGravity(gravity, layoutDirection);
     final int verticalGravity = gravity & Gravity.VERTICAL_GRAVITY_MASK;
 
     int childLeft;
     int childTop;
+
     switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK)
     {
     case Gravity.CENTER_HORIZONTAL:
-      childLeft = (getWidth() + getPaddingLeft() - getPaddingRight() - w) / 2 + lp.leftMargin - lp.rightMargin;
+      childLeft = (getWidth() + getPaddingLeft() - getPaddingRight() - width) / 2 + lp.leftMargin - lp.rightMargin;
       break;
     case Gravity.END:
-      childLeft = getWidth() + getPaddingRight() - w - lp.rightMargin;
+      childLeft = getWidth() + getPaddingRight() - width - lp.rightMargin;
       break;
     case Gravity.START:
     default:
@@ -319,10 +321,10 @@ public class SwipeCardView
     switch (verticalGravity)
     {
     case Gravity.CENTER_VERTICAL:
-      childTop = (getHeight() + getPaddingTop() - getPaddingBottom() - h) / 2 + lp.topMargin - lp.bottomMargin;
+      childTop = (getHeight() + getPaddingTop() - getPaddingBottom() - height) / 2 + lp.topMargin - lp.bottomMargin;
       break;
     case Gravity.BOTTOM:
-      childTop = getHeight() - getPaddingBottom() - h - lp.bottomMargin;
+      childTop = getHeight() - getPaddingBottom() - height - lp.bottomMargin;
       break;
     case Gravity.TOP:
     default:
@@ -330,13 +332,13 @@ public class SwipeCardView
       break;
     }
 
-    child.layout(childLeft, childTop, childLeft + w, childTop + h);
+    child.layout(childLeft, childTop, childLeft + width, childTop + height);
   }
 
   public void relayoutChild(View child, float scrollDis, int childcount)
   {
     float absScrollDis = scrollDis > 1 ? 1 : scrollDis;
-    float newScale = (float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET);
+    float newScale = (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET);
     child.setScaleX(newScale);
     child.setScaleY(newScale);
     child.setTranslationY(TRANS_OFFSET * (MAX_VISIBLE - childcount) - absScrollDis * TRANS_OFFSET);
